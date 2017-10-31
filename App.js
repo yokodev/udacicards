@@ -1,10 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { StyleSheet, Text, View, Platform,StatusBar } from 'react-native'
 import { TabNavigator } from 'react-navigation'
 import Deck from './components/Deck'
 import ListDeck from './components/ListDeck'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+// import { Provider } from 'react-redux'
+// import configureStore  from './store'
+import { Constants } from 'expo'
 
+// const store = configureStore()
+
+function MyStatusBar({backgroundColor, ...props}){
+  return(
+    <View style={ {backgroundColor, height:Constants.statusBarHeight}}> 
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+
+}
 
 const Tabs = TabNavigator({
   ListDeck: {
@@ -42,13 +55,16 @@ const Tabs = TabNavigator({
 
 })
 
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex:1}}>
-      <View style={{height:20}}/>
-        <Tabs />
-      </View>
+      // <Provider store={store}>
+        <View style={{flex:1}}>
+          <MyStatusBar />
+            <Tabs />
+        </View>
+      // </Provider>
     )
   }
 }
