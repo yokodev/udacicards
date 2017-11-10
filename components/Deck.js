@@ -1,37 +1,63 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity,
-   AsyncStorage, Button, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { CARDS_STORAGE_KEY } from '../storage'
-import * as Colors from '../utils/colors'
-import { defaultPrimaryColor, dividerColor, textPrimaryColor, primaryTextColor} from '../utils/colors'
+import { saveDeckTitle, getDecks } from '../storage'
 import TextButton from './TextButton'
+import { defaultPrimaryColor, dividerColor,
+  textPrimaryColor, secondaryTextColor } from '../utils/colors'
 
 class Deck extends React.Component {
+  addCard = ()=>{
+    // alert( JSON.stringify(this.props))
+    this.props.navigation.navigate('NewCard')
+  }
+  startQuiz = ()=>{
+    // alert( 'startQuiz',this.props)
+    this.props.navigation.navigate('Quiz')
+  }
 
-  // saveData = (data) =>{
-  //   alert("this is the data ",data)
-  //   const user = 'Jon Doe'
-  //   AsyncStorage.setItem('user',user)
-  //     .then(
-  //       data=>console.log('data REturned ', data),
-  //       error=>console.error(error)
-  //   )
-  //
-  // }
+  render(){
+    const { questions, title }= this.props.navigation.state.params.item
 
-  render() {
-    return (
+    return(
       <View>
-        <TextButton>Save to deck</TextButton>
-        <View style={{borderBottomColor: dividerColor, borderBottomWidth:3}}/>
-        <TextButton>Save to deck</TextButton>
+        <Text style={styles.mainHeader}>{title}</Text>
+        <Text style={styles.subHeader}>{`${questions? questions.length:0} Cards`}</Text>
+        <TextButton btnStyle={[styles.btn,
+          { backgroundColor:'white',
+            borderColor: 'black',
+            marginBottom: 5
+          }]} txtStyle={{color:'black'}} onPress={this.addCard}>Add Card</TextButton>
+        {/* <View style={{borderBottomWidth:10,borderBottomColor:dividerColor}}></View> */}
+        <TextButton btnStyle={styles.btn} onPress={this.startQuiz}>Start Quiz</TextButton>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  mainHeader:{
+    fontSize:30,
+    color:textPrimaryColor,
+    // flex:1,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  subHeader:{
+    fontSize:18,
+    color:secondaryTextColor,
+    // flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  btn:{
+    // width:200,
+    borderRadius: 25,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+  }
 
 })
+
+
 export default Deck
