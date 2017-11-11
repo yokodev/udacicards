@@ -2,7 +2,6 @@ import React from 'react'
 import {
   View, Text, StyleSheet, TextInput } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { saveDeckTitle, getDecks } from '../storage'
 import * as Colors from '../utils/colors'
 import {
   defaultPrimaryColor, dividerColor,
@@ -10,11 +9,22 @@ import {
 import TextButton from './TextButton'
 import { NavigationActions } from 'react-navigation'
 import { FormLabel, FormInput } from 'react-native-elements'
+import { saveDeckTitle, getDecks, removeThis,persistData } from '../storage'
 
 class NewDeck extends React.Component {
 
   state={
     deckTitle:''
+  }
+  ssaveTitle = ()=>{
+      removeThis('LLAVE01').then(
+      data=>{
+        console.log('REMOVEladata', data)
+        persistData()
+        .then(
+          persitedDATA=>console.log('persistida: ',persitedDATA)
+        )}
+    )
   }
 
   saveTitle = ()=>{

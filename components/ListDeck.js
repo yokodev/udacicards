@@ -30,7 +30,6 @@ class ListDeck extends React.Component{
     })
   }
     render(){
-      console.log('props ', this.props);
         const { deckList } = this.state
         let listToRender=null
         if(deckList !==undefined){
@@ -58,9 +57,6 @@ class ListDeck extends React.Component{
 
         return(
             <View style={{flex:1 }}>
-              {/* <TextButton onPress={this.setInitialData}>set initial data</TextButton>
-              <View style={{borderBottomColor:dividerColor, borderBottomWidth:3}}></View>
-              <TextButton onPress={this.getDeckList}>retrieve data</TextButton> */}
               <List>
                 {listToRender}
               </List>

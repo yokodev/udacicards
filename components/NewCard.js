@@ -10,6 +10,7 @@ import
    * as MyColors
   from '../utils/colors'
 import { addCardToDeck } from '../storage'
+import { NavigationActions } from 'react-navigation'
 
 class NewCard extends React.Component {
 
@@ -21,9 +22,20 @@ class NewCard extends React.Component {
   saveNewCard = ()=>{
     const {question, answer }= this.state
     const card = {question:question,answer:answer}
+    const title='Tres'
     // alert(JSON.stringify(this.state))
-    console.log('LOGGER',this.props);
-    // addCardToDeck()
+    // console.log('LOGGER',this.props);
+    addCardToDeck({title,card})
+    .then(res=>{
+      console.log('this is the props ',this.props)
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Deck'}),
+        ]
+      })
+      // this.props.navigation.dispatch(resetAction)
+    })
   }
 
   render(){

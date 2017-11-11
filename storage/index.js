@@ -54,7 +54,7 @@ export async function getDecks(){
 export const saveDeckTitle = async (title) => {
   try {
     const preparedTitle = startCase(title.toLowerCase()).replace(/\s+/g, '')
-    const newEntry = { [preparedTitle]:{title:preparedTitle}}
+    const newEntry = { [preparedTitle]:{title:preparedTitle,questions:[]}}
     const resp=null
     const allDecks = await getDecks() //getting previous data
     // console.log(allDecks);
@@ -82,7 +82,15 @@ export const saveDeckTitle = async (title) => {
  *
  * @return {type}
  */
-export const getDeck =(deckId)=>{
+export const getDeck = async (deckId)=>{
+  try {
+    const deckList = await AsyncStorage.getItem(STORAGE_CARDS_KEY)
+    if (deckList !== null){
+      return JSON.parse( deckList[deckId] )
+    }
+  } catch (error) {
+    console.log('Error @getDeck... ',error)
+  }
 }
 
 /**
@@ -94,23 +102,32 @@ export const getDeck =(deckId)=>{
  *
  * @return {type} Description
  */
-export function addCardToDeck({ title, card}){
-  // return AsyncStorage.getItem(STORAGE_CARDS_KEY)
-  //     .then(results =>{
-  //         const data = JSON.parse(results)
-  //         data[title]= [questions]
-  //         delete data[key]
-  //         AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(data))
-  //     })
-  // return AsyncStorage.mergeItem(STORAGE_CARDS_KEY, JSON.stringify({
-  //   [title]:{ questions:[card] }
-  // }))
+export  function addCardToDeck({ title, card}){
+  console.log('title ',title);
+  console.log('card ',card);
+   return AsyncStorage.getItem(STORAGE_CARDS_KEY)
+      .then(results =>{
+          const deckList = JSON.parse(results)
+          deckList[title].questions = deckList[title].questions.concat(card)
+          console.log('questiones ',deckList[title].questions);
+          // console.log('justbefore ',deckList);
+           AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(deckList))
+      })
 }
 
-export function SubmitEntry ( {entry, key}){
+export function SubmitEntry( {entry, key}){
     return AsyncStorage.mergeItem(STORAGE_CARDS_KEY,JSON.stringify({
         [key]:entry,
     }))
+}
+
+export function removeThis(tokenId){
+  return AsyncStorage.removeItem(tokenId)
+}
+
+
+export function clearStore(){
+  return AsyncStorage.clear()
 }
 
 export function persistData(){
