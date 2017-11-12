@@ -109,8 +109,6 @@ export  function addCardToDeck({ title, card}){
       .then(results =>{
           const deckList = JSON.parse(results)
           deckList[title].questions = deckList[title].questions.concat(card)
-          console.log('questiones ',deckList[title].questions);
-          // console.log('justbefore ',deckList);
            AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(deckList))
       })
 }

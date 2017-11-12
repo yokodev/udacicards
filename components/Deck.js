@@ -9,7 +9,8 @@ import { defaultPrimaryColor, dividerColor,
 class Deck extends React.Component {
   addCard = ()=>{
     // alert( JSON.stringify(this.props))
-    this.props.navigation.navigate('NewCard')
+    const { item:{title} }= this.props.navigation.state.params
+    this.props.navigation.navigate('NewCard',{title})
   }
   startQuiz = ()=>{
     // alert( 'startQuiz',this.props)
@@ -17,6 +18,7 @@ class Deck extends React.Component {
   }
 
   render(){
+    console.log('props en Deck ',this.props);
     const { questions, title }= this.props.navigation.state.params.item
 
     return(

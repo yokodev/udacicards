@@ -49,13 +49,24 @@ const Stack = StackNavigator({
     screen: Tabs
   },
   Deck:{
-    screen: Deck
+    screen: Deck,
+    navigationOptions:{
+      title:'Ucacicards',
+    }
   },
   NewCard:{
-    screen: NewCard
+    screen: NewCard,
+    navigationOptions:{
+      title:'Add a Card',
+    }
+
   },
   Quiz:{
-    screen: Quiz
+    screen: Quiz,
+    navigationOptions:{
+      title:'Quiz',
+    }
+
   }
 })
 
