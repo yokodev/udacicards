@@ -1,13 +1,17 @@
 import React from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import {
+  View, Text, StyleSheet,
+  FlatList, DeviceEventEmitter } from 'react-native'
 import Reactotron from 'reactotron-react-native'
 import { persistData, getDecks } from '../storage'
 import TextButton from './TextButton'
 import { List, ListItem } from 'react-native-elements'
 import {
-  defaultPrimaryColor, dividerColor, textPrimaryColor,
-  primaryTextColor
+  defaultPrimaryColor, dividerColor,
+  textPrimaryColor, primaryTextColor
 } from '../utils/colors'
+import { connect } from 'react-redux'
+import { getAllDecks } from '../actions'
 
 class ListDeck extends React.Component {
   state = {
@@ -15,6 +19,8 @@ class ListDeck extends React.Component {
   }
 
   componentDidMount() {
+    DeviceEventEmitter
+      .addListener('refreshList', (e)=>{this.getDeckList()})
     this.getDeckList()
   }
 
@@ -23,14 +29,13 @@ class ListDeck extends React.Component {
   }
 
   getDeckList = () => {
-    getDecks().then(data => {
-      data
-        ? this.setState(state => ({ deckList: data }))
-        : console.error('nodata ', data)
-    })
+    this.props.dispatch(getAllDecks())
   }
+
   render() {
-    const { deckList } = this.state
+    // console.log('thisProps en LIST ',this.props)
+    // const { deckList } = this.state
+    const { deckList } = this.props
     let listToRender = null
     if (deckList !== undefined) {
       const list = Object.values(deckList)
@@ -61,4 +66,9 @@ class ListDeck extends React.Component {
   }
 }
 
-export default ListDeck
+function mapStateToProps({deckList}){
+  return{
+    deckList
+  }
+}
+export default connect(mapStateToProps)(ListDeck)

@@ -42,6 +42,11 @@ export async function getDecks(){
   } catch (e) {
     console.error("there was an error", e)
   }
+
+    // return AsyncStorage.getItem(STORAGE_CARDS_KEY)
+    // .then(results=>JSON.parse(results))
+    // .catch(error=>console.log('there was an error,',e))
+
 }
 
 /**
