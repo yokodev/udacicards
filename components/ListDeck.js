@@ -14,16 +14,25 @@ import { connect } from 'react-redux'
 import { getAllDecks } from '../actions'
 
 class ListDeck extends React.Component {
-  state = {
-    deckList: []
-  }
 
   componentDidMount() {
-    DeviceEventEmitter
-      .addListener('refreshList', (e)=>{this.getDeckList()})
+    // DeviceEventEmitter
+    //   .addListener('refreshList', (e)=>{this.getDeckList()})
     this.getDeckList()
   }
 
+componentWillReceiveProps(nextProps){
+  // const { deckList:{loading} } =this.props
+
+  console.log('nextProps ',nextProps);
+  this.getDeckList()
+}
+
+shouldComponentUpdate(nextProps, nextState){
+  if (this.props.deckList.loading !== nextProps.deckList.loading){
+    return false
+  }
+}
   setInitialData = () => {
     persistData().then(data => Reactotron.log(data))
   }
@@ -33,11 +42,11 @@ class ListDeck extends React.Component {
   }
 
   render() {
-    // console.log('thisProps en LIST ',this.props)
-    // const { deckList } = this.state
+     console.log('thisProps en LIST ',this.props)
     const { deckList } = this.props
+    const isEmpty = Object.keys(deckList).length >0 ? true : false
     let listToRender = null
-    if (deckList !== undefined) {
+    if (!isEmpty) {
       const list = Object.values(deckList)
       // console.log(list)
       listToRender = (

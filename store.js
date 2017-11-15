@@ -3,6 +3,8 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
+//import { persistStore, persistCombineReducers } from 'redux-persist'
+//import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 
 
 

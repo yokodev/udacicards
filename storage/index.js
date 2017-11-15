@@ -37,8 +37,8 @@ export const decksEXAMPLE = {
  */
 export async function getDecks(){
   try {
-    const Decks = await AsyncStorage.getItem(STORAGE_CARDS_KEY)
-    return Decks ? JSON.parse(Decks) : null
+    let Decks = await AsyncStorage.getItem(STORAGE_CARDS_KEY)
+    return Decks ? JSON.parse(Decks) : {}
   } catch (e) {
     console.error("there was an error", e)
   }
@@ -60,7 +60,7 @@ export const saveDeckTitle = async (title) => {
   try {
     const preparedTitle = startCase(title.toLowerCase()).replace(/\s+/g, '')
     const newEntry = { [preparedTitle]:{title:preparedTitle,questions:[]}}
-    const resp=null
+    let resp=null
     const allDecks = await getDecks() //getting previous data
     // console.log(allDecks);
     return allDecks
@@ -89,9 +89,11 @@ export const saveDeckTitle = async (title) => {
  */
 export const getDeck = async (deckId)=>{
   try {
-    const deckList = await AsyncStorage.getItem(STORAGE_CARDS_KEY)
-    if (deckList !== null){
-      return JSON.parse( deckList[deckId] )
+    let results = await AsyncStorage.getItem(STORAGE_CARDS_KEY)
+    if (results !== null){
+      let deckList = JSON.parse(results)
+      let deckItem = deckList[deckId]
+      return deckItem
     }
   } catch (error) {
     console.log('Error @getDeck... ',error)

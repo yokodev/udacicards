@@ -1,14 +1,23 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { saveDeckTitle, getDecks } from '../storage'
+import { connect } from 'react-redux'
 import TextButton from './TextButton'
-import { defaultPrimaryColor, dividerColor,
-  textPrimaryColor, secondaryTextColor } from '../utils/colors'
+import { textPrimaryColor, secondaryTextColor } from '../utils/colors'
+import { getDeckItem } from '../actions'
 
 class Deck extends React.Component {
+
+
+	componentDidMount(){
+		const { title} = this.props.navigation.state.params.item
+		console.log('title en CDM ',title);
+		this.props.dispatch(getDeckItem(title))
+	}
+
+
+
   addCard = ()=>{
-    // alert( JSON.stringify(this.props))
     const { item:{title} }= this.props.navigation.state.params
     this.props.navigation.navigate('NewCard',{title})
   }
@@ -18,8 +27,9 @@ class Deck extends React.Component {
   }
 
   render(){
-    console.log('props en Deck ',this.props);
-    const { questions, title }= this.props.navigation.state.params.item
+    console.log('props en  DeckItem ',this.props);
+    // const { questions, title }= this.props.navigation.state.params.item
+    const { questions, title }= this.props.deckItem
 
     return(
       <View>
@@ -62,4 +72,12 @@ const styles = StyleSheet.create({
 })
 
 
-export default Deck
+
+function mapStateToProps({deckItem}){
+	return{
+		deckItem
+	}
+}
+
+
+export default connect(mapStateToProps)(Deck)
