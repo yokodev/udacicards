@@ -23,16 +23,24 @@ class ListDeck extends React.Component {
 
 componentWillReceiveProps(nextProps){
   // const { deckList:{loading} } =this.props
-
-  console.log('nextProps ',nextProps);
-  this.getDeckList()
+   const actual= Object.keys(this.props.deckList).length
+   const next = Object.keys(nextProps.deckList).length
+   if( !(actual === next)){
+      //  this.getDeckList()
+      console
+      .log(`cambio
+          ACTUAL = ${actual}
+          NEXT = ${next}
+        `)
+     }
+  console.log('nextProps ',next);
 }
 
-shouldComponentUpdate(nextProps, nextState){
-  if (this.props.deckList.loading !== nextProps.deckList.loading){
-    return false
-  }
-}
+// shouldComponentUpdate(nextProps, nextState){
+//   // if (this.props.deckList.loading !== nextProps.deckList.loading){
+//   //   return false
+//   // }
+// }
   setInitialData = () => {
     persistData().then(data => Reactotron.log(data))
   }
@@ -42,13 +50,14 @@ shouldComponentUpdate(nextProps, nextState){
   }
 
   render() {
-     console.log('thisProps en LIST ',this.props)
+    //  console.log('thisProps en LIST ',this.props)
     const { deckList } = this.props
-    const isEmpty = Object.keys(deckList).length >0 ? true : false
+    // console.log('deckList ',deckList)
+    const isEmpty = Object.keys(deckList).length <1 ? true : false
     let listToRender = null
     if (!isEmpty) {
       const list = Object.values(deckList)
-      // console.log(list)
+      // console.log('LISTA ',list)
       listToRender = (
         <FlatList
           data={list}

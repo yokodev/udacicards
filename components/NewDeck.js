@@ -7,6 +7,7 @@ import { NavigationActions } from 'react-navigation'
 import { FormLabel, FormInput } from 'react-native-elements'
 import { saveDeckTitle,  persistData } from '../storage'
 import { getAllDecks } from '../actions'
+import { connect } from 'react-redux'
 
 class NewDeck extends React.Component {
   state = {
@@ -23,13 +24,14 @@ class NewDeck extends React.Component {
 
   saveTitle = () => {
     saveDeckTitle(this.state.deckTitle).then(() => {
+      this.props.dispatch(getAllDecks())
       this.props.navigation.goBack()
       this.textInput.clear()
     })
   }
 
   render() {
-    console.log('render DeckItem ',this.props);
+    // console.log('render newDeck ',this.props);
     return (
       <View>
         <Text style={styles.txtHeader}>What is the title of your new Deck?</Text>
@@ -52,4 +54,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default NewDeck
+export default connect()(NewDeck)

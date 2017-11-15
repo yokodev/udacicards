@@ -11,7 +11,7 @@ class Deck extends React.Component {
 
 	componentDidMount(){
 		const { title} = this.props.navigation.state.params.item
-		console.log('title en CDM ',title);
+		// console.log('title en CDM ',title);
 		this.props.dispatch(getDeckItem(title))
 	}
 
@@ -27,7 +27,7 @@ class Deck extends React.Component {
   }
 
   render(){
-    console.log('props en  DeckItem ',this.props);
+    // console.log('props en  DeckItem ',this.props);
     // const { questions, title }= this.props.navigation.state.params.item
     const { questions, title }= this.props.deckItem
 

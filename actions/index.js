@@ -12,7 +12,6 @@ export const getAllDecks = ()=> async dispatch=>{
   dispatch({type:GET_DECKS})
   return getDecks()
   .then(data => {
-    console.log("data in GETDECKS ", data);
     data
       ? dispatch({type:GET_DECKS_SUCCESS,  deckList: data })
       : ( dispatch({type:GET_DECKS_FAILURE,  error: data })

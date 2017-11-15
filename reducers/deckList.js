@@ -4,10 +4,10 @@ const initialState ={}
 
 function deckList(state = initialState, action){
     switch(action.type){
-        case Actions.GET_DECKS:
-        return {...state, loading:true}
+        // case Actions.GET_DECKS:
+        // return {...state, loading:true}
         case Actions.GET_DECKS_SUCCESS:
-        return {...state, loading:false, ...action.deckList}
+        return {...state, ...action.deckList}
         case Actions.GET_DECKS_FAILURE:
         return {...state, loading:false, error:action.error}
         default:
