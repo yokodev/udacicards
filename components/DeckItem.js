@@ -6,31 +6,21 @@ import TextButton from './TextButton'
 import { textPrimaryColor, secondaryTextColor } from '../utils/colors'
 import { getDeckItem } from '../actions'
 
-class Deck extends React.Component {
-
-
-	componentDidMount(){
-		const { title} = this.props.navigation.state.params.item
-		// console.log('title en CDM ',title);
-		this.props.dispatch(getDeckItem(title))
-	}
-
-
+class DeckItem extends React.Component {
 
   addCard = ()=>{
-    const { item:{title} }= this.props.navigation.state.params
-    this.props.navigation.navigate('NewCard',{title})
+    const { item }= this.props.navigation.state.params
+    this.props.navigation.navigate('NewCard',{item})
   }
+
   startQuiz = ()=>{
-    // alert( 'startQuiz',this.props)
-    this.props.navigation.navigate('Quiz')
+    const { item }= this.props.navigation.state.params
+    this.props.navigation.navigate('Quiz',{item})
   }
 
   render(){
-    // console.log('props en  DeckItem ',this.props);
-    // const { questions, title }= this.props.navigation.state.params.item
-    const { questions, title }= this.props.deckItem
-
+    // console.log('en deckItem ', this.props);
+    const { questions=[], title='Default Card' }= this.props.deckItem
     return(
       <View>
         <Text style={styles.mainHeader}>{title}</Text>
@@ -71,13 +61,8 @@ const styles = StyleSheet.create({
 
 })
 
-
-
-function mapStateToProps({deckItem}){
-	return{
-		deckItem
-	}
+function mapStateToProps({deckList, deckItem}){
+	return{ deckList,deckItem }
 }
 
-
-export default connect(mapStateToProps)(Deck)
+export default connect(mapStateToProps)(DeckItem)

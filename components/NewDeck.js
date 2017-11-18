@@ -6,12 +6,12 @@ import TextButton from './TextButton'
 import { NavigationActions } from 'react-navigation'
 import { FormLabel, FormInput } from 'react-native-elements'
 import { saveDeckTitle,  persistData } from '../storage'
-import { getAllDecks } from '../actions'
+import { getAllDecks, addDeckItem } from '../actions'
 import { connect } from 'react-redux'
 
 class NewDeck extends React.Component {
   state = {
-    deckTitle: ''
+    title: ''
   }
 
   //this is only for reseting purposes
@@ -23,7 +23,14 @@ class NewDeck extends React.Component {
   }
 
   saveTitle = () => {
-    saveDeckTitle(this.state.deckTitle).then(() => {
+    const {title} = this.state
+    this.props.dispatch(addDeckItem({title}))
+    this.props.navigation.goBack()
+    this.textInput.clear()
+  }
+
+  SsaveTitle = () => {
+    saveDeckTitle(this.state.title).then(() => {
       this.props.dispatch(getAllDecks())
       this.props.navigation.goBack()
       this.textInput.clear()
@@ -37,7 +44,7 @@ class NewDeck extends React.Component {
         <Text style={styles.txtHeader}>What is the title of your new Deck?</Text>
         <TextInput
           placeholder="Deck Title"
-          onChangeText={text => this.setState({ deckTitle: text })}
+          onChangeText={text => this.setState({ title: text })}
           ref={input => {
             this.textInput = input
           }}

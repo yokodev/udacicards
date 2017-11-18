@@ -16,7 +16,8 @@ const TextButton = ({onPress, children, txtStyle={},btnStyle={}})=>
       margin:20
     },
     btn:{
-      backgroundColor: accentColor
+      backgroundColor: accentColor,
+      justifyContent: 'center'
     }
   })
 

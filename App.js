@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform,StatusBar } from 'react-native'
+import { StyleSheet, Text, View, Platform, StatusBar, ActivityIndicator } from 'react-native'
 import { TabNavigator } from 'react-navigation'
 import NewDeck from './components/NewDeck'
 import ListDeck from './components/ListDeck'
@@ -10,8 +10,10 @@ import { Provider } from 'react-redux'
 import configureStore  from './store'
 import { Constants } from 'expo'
 import Stack from './components/AppNavigator'
+import { PersistGate } from 'redux-persist/es/integration/react'
 
-const store = configureStore()
+// const store = configureStore()
+const { persistor, store } = configureStore()
 
 function MyStatusBar({backgroundColor, ...props}){
   return(
@@ -24,11 +26,16 @@ function MyStatusBar({backgroundColor, ...props}){
 export default class App extends React.Component {
   render() {
     return (
+
       <Provider store={store}>
-        <View style={{flex:1}}>
-          <MyStatusBar />
+        <PersistGate
+          loading={<ActivityIndicator size={'large'}/>}
+          persistor={persistor}>
+          <View style={{ flex: 1 }}>
+            <MyStatusBar />
             <Stack />
-        </View>
+          </View>
+        </PersistGate>
       </Provider>
     )
   }

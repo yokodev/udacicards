@@ -1,17 +1,30 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
-import rootReducer from './reducers'
+import { deckList, deckItem, quiz } from './reducers'
 
-//import { persistStore, persistCombineReducers } from 'redux-persist'
+/****REDUX-PERSIST****/
+import {REHYDRATE, PURGE, persistStore, persistCombineReducers } from 'redux-persist'
 //import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
+// import storage from 'redux-persist/lib/storage'
+import { AsyncStorage } from 'react-native'
 
 
+const config = {
+  // key: 'MyUdaciCards:storage_key',
+  key: 'Mytorage_key',
+  storage:AsyncStorage,
+  debug:true,
+  blacklist:['quiz']
+}
+
+let reducer = persistCombineReducers(config, { deckList, deckItem, quiz } )
+/****REDUX-PERSIST****/
 
 
 export default function configureStore(){
 
-    const middleWares = [/*logger,*/ thunk]
+    const middleWares = [logger, thunk]
     const enhancers = [applyMiddleware(...middleWares)]
 
     const composeEnhancers =
@@ -20,7 +33,9 @@ export default function configureStore(){
         ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ shouldHotReload: false,})
         : compose
 
-    const store = createStore(rootReducer, composeEnhancers(...enhancers) )
+    let store = createStore(reducer, composeEnhancers(...enhancers) )
+    let persistor = persistStore( store )
+    // persistor.purge()
 
-    return store
+    return { persistor, store}
 }

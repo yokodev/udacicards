@@ -3,7 +3,7 @@ import { StackNavigator , TabNavigator } from 'react-navigation'
 import { Platform } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { darkPrimaryColor,defaultPrimaryColor, textPrimaryColor} from '../utils/colors'
-import Deck from './Deck'
+import DeckItem from './DeckItem'
 import ListDeck from './ListDeck'
 import NewDeck from './NewDeck'
 import Quiz from './Quiz'
@@ -49,7 +49,7 @@ const Stack = StackNavigator({
     screen: Tabs
   },
   Deck:{
-    screen: Deck,
+    screen: DeckItem,
     navigationOptions:{
       title:'Ucacicards',
     }

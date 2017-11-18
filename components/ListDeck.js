@@ -1,9 +1,8 @@
 import React from 'react'
 import {
   View, Text, StyleSheet,
-  FlatList, DeviceEventEmitter } from 'react-native'
+  FlatList, DeviceEventEmitter, ActivityIndicator } from 'react-native'
 import Reactotron from 'reactotron-react-native'
-import { persistData, getDecks } from '../storage'
 import TextButton from './TextButton'
 import { List, ListItem } from 'react-native-elements'
 import {
@@ -11,42 +10,17 @@ import {
   textPrimaryColor, primaryTextColor
 } from '../utils/colors'
 import { connect } from 'react-redux'
-import { getAllDecks } from '../actions'
+import { getDeckItem } from '../actions'
 
 class ListDeck extends React.Component {
 
-  componentDidMount() {
-    // DeviceEventEmitter
-    //   .addListener('refreshList', (e)=>{this.getDeckList()})
-    this.getDeckList()
-  }
-
-componentWillReceiveProps(nextProps){
-  // const { deckList:{loading} } =this.props
-   const actual= Object.keys(this.props.deckList).length
-   const next = Object.keys(nextProps.deckList).length
-   if( !(actual === next)){
-      //  this.getDeckList()
-      console
-      .log(`cambio
-          ACTUAL = ${actual}
-          NEXT = ${next}
-        `)
-     }
-  console.log('nextProps ',next);
-}
-
-// shouldComponentUpdate(nextProps, nextState){
-//   // if (this.props.deckList.loading !== nextProps.deckList.loading){
-//   //   return false
-//   // }
-// }
   setInitialData = () => {
     persistData().then(data => Reactotron.log(data))
   }
 
-  getDeckList = () => {
-    this.props.dispatch(getAllDecks())
+  goToDeckItem = ({ item })=>{
+    this.props.dispatch(getDeckItem({deckItem:item}))
+    this.props.navigation.navigate('Deck', { item })
   }
 
   render() {
@@ -54,7 +28,7 @@ componentWillReceiveProps(nextProps){
     const { deckList } = this.props
     // console.log('deckList ',deckList)
     const isEmpty = Object.keys(deckList).length <1 ? true : false
-    let listToRender = null
+    let listToRender = <ActivityIndicator size={'large'}/>
     if (!isEmpty) {
       const list = Object.values(deckList)
       // console.log('LISTA ',list)
@@ -67,7 +41,7 @@ componentWillReceiveProps(nextProps){
               <ListItem
                 title={item.title}
                 badge={{ value: questions, textStyle: { color: 'orange' } }}
-                onPress={() => this.props.navigation.navigate('Deck', { item })}
+                onPress={()=>this.goToDeckItem({item})}
               />
             )
           }}
