@@ -4,7 +4,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import TextButton from './TextButton'
 import { textPrimaryColor, secondaryTextColor } from '../utils/colors'
-import { getDeckItem } from '../actions'
+import { getDeckItem, setTotalQuestions } from '../actions'
 
 class DeckItem extends React.Component {
 
@@ -14,8 +14,10 @@ class DeckItem extends React.Component {
   }
 
   startQuiz = ()=>{
-    const { item }= this.props.navigation.state.params
-    this.props.navigation.navigate('Quiz',{item})
+    // const { item }= this.props.navigation.state.params
+    const {deckItem}= this.props
+    this.props.dispatch(setTotalQuestions(deckItem.questions.length))
+    this.props.navigation.navigate('Quiz',{item:deckItem})
   }
 
   render(){

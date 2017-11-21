@@ -11,6 +11,7 @@ import configureStore  from './store'
 import { Constants } from 'expo'
 import Stack from './components/AppNavigator'
 import { PersistGate } from 'redux-persist/es/integration/react'
+import { setLocalNotifications } from './notifications'
 
 // const store = configureStore()
 const { persistor, store } = configureStore()
@@ -24,6 +25,10 @@ function MyStatusBar({backgroundColor, ...props}){
 }
 
 export default class App extends React.Component {
+
+  componentDidMount(){
+    setLocalNotifications()
+  }
   render() {
     return (
 

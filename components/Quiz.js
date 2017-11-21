@@ -8,47 +8,46 @@ import QA from './QA'
 import Modal from './Modal'
 import { Button } from 'react-native-elements'
 import * as Mcolors from '../utils/colors'
-import { toggleFlipText, addCorrect, addIncorrect } from '../actions'
+import {
+  toggleFlipText,
+  addCorrect,
+  addIncorrect,
+  toggleModal,
+  resetQuiz
+} from '../actions'
+import { clearLocalNotifications, setLocalNotifications } from '../notifications'
 
 class Quiz extends React.Component {
   state = {
-    correctAnswers: 0,
-    incorrectAnswers: 0,
-    currQuestionIndex: 0,
     showModal: false
   }
 
-  componentDidMount() {
-    console.log('this.props en CDM', this.props)
-  }
-
-  getCurrEntry = ({ questions }) => {
-    return questions[this.state.currQuestionIndex]
-  }
+  // componentDidMount() {
+  //   console.log('this.props en CDM', this.props)
+  // }
 
   handleCorrectPush = () => {
-    const totalQuestions = this.props.deckItem.questions.length
-    const { correctAnswers, incorrectAnswers, currQuestionIndex } = this.props.quiz
+    const { currVisibleQuestionIndex, currQuestionIndex,
+            correctAnswers, incorrectAnswers, quizComplete, totalQuestions
+          } = this.props.quiz
     const total = correctAnswers + incorrectAnswers
-    return total < totalQuestions
-    ? this.props.dispatch(addCorrect( currQuestionIndex,correctAnswers))
-    : total === totalQuestions && this.showModal()
+    return total === totalQuestions && quizComplete
+    ? this.showModal()
+    : this.props.dispatch(addCorrect( currQuestionIndex,correctAnswers, currVisibleQuestionIndex))
   }
 
   handleIncorrectPush = () => {
-    const totalQuestions = this.props.deckItem.questions.length
-    const { correctAnswers, incorrectAnswers, currQuestionIndex } = this.state
+    const { currVisibleQuestionIndex, currQuestionIndex,
+            correctAnswers, incorrectAnswers, quizComplete, totalQuestions
+          } = this.props.quiz
     const total = correctAnswers + incorrectAnswers
-    return total < totalQuestions 
-    ? this.props.dispatch(addIncorrect(currQuestionIndex,incorrectAnswers)) 
-    : total === totalQuestions && this.showModal()
+    return total === totalQuestions && quizComplete
+    ? total === totalQuestions && this.showModal()
+    : this.props.dispatch(addIncorrect(currQuestionIndex,incorrectAnswers, currVisibleQuestionIndex))
   }
 
   showModal = () => {
-    let { showModal } = this.state
-    showModal
-      ? this.setState({ showModal: false })
-      : this.setState({ showModal: true })
+     this.props.dispatch(toggleModal())
   }
 
   toggleQoA = () => {
@@ -56,25 +55,33 @@ class Quiz extends React.Component {
     this.props.dispatch(toggleFlipText(qOa))
   }
 
+  resultsDecision = ({decision})=>{
+    const {navigation:{navigate}, dispatch} =this.props
+    dispatch(resetQuiz())
+    decision ==='ListDeck' && navigate(decision )
+    clearLocalNotifications()
+      .then(setLocalNotifications())
+  }
 
   render() {
     const { questions } = this.props.deckItem
     const { correctAnswers, incorrectAnswers, currQuestionIndex,
-            quizFlipText, qOa } = this.props.quiz
-    const currEntry = this.getCurrEntry({ questions })
-    const totalQuestions = questions.length
+            quizFlipText, qOa,currVisibleQuestionIndex,
+            quizComplete, totalQuestions, showModal } = this.props.quiz
+    const currEntry = questions[currQuestionIndex]
 
-    console.group('Details')
-    console.log('currInde ', currQuestionIndex)
-    console.log('totalQ ', totalQuestions)
-    console.log('correct ', correctAnswers)
-    console.log('incorrect ', incorrectAnswers)
-    console.groupEnd()
+    // console.group('Details')
+    // console.log('currVisibleIndex ', currVisibleQuestionIndex)
+    // console.log('currInde ', currQuestionIndex)
+    // console.log('totalQ ', totalQuestions)
+    // console.log('correct ', correctAnswers)
+    // console.log('incorrect ', incorrectAnswers)
+    // console.groupEnd()
 
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.cardCount}>
-          {`${currQuestionIndex +1}/${totalQuestions}`}
+          {`${currVisibleQuestionIndex}/${totalQuestions}`}
         </Text>
         <QA {...currEntry} qOa={qOa} />
         <View style={styles.btnContainer}>
@@ -101,21 +108,15 @@ class Quiz extends React.Component {
             buttonStyle={[styles.btn, { marginBottom: 10 }]}
           />
 
-          {this.state.showModal && (
-            <Modal
-              showModal={this.showModal}
-              modalState={this.state.showModal}
-            />
-          )}
-          {/* <Button
-            Component={TouchableOpacity}
-            loading
-            loadingRight
-            borderRadius={10}
-            icon={{name:'done'}}
-            title='Open'
-            backgroundColor ={ Mcolors.defaultPrimaryColor }
-           onPress={this.showModal}>modal</Button> */}
+          { quizComplete && (
+              <Modal
+                showModal={this.showModal}
+                modalState={showModal}
+                execDecision={this.resultsDecision}
+                {...{correctAnswers, incorrectAnswers,totalQuestions}}
+              />
+            )
+          }
         </View>
       </View>
     )
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     // borderRadius:10
     // backgroundColor: 'gray',
   },
-  btnCorrect: {    
+  btnCorrect: {
     marginBottom:10
   },
   btnInCorrect: {
