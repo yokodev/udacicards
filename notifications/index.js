@@ -29,7 +29,7 @@ const schedulingOptions = ()=>{
   inFewMinutes.setMinutes(inFewMinutes.getMinutes()+10)
   return {
     time:inFewMinutes,
-    repeat:'minute'
+    repeat:'hour'
   }
 }
 export function setLocalNotifications(){
