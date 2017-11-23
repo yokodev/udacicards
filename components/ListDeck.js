@@ -8,7 +8,7 @@ import { List, ListItem } from 'react-native-elements'
 import  * as MyColors from '../utils/colors'
 import { connect } from 'react-redux'
 import { getDeckItem } from '../actions'
-import MyIModal from './components/InitModal'
+import MyIModal from './InitModal'
 
 class ListDeck extends React.Component {
   state = {
@@ -25,14 +25,12 @@ class ListDeck extends React.Component {
   }
 
   toggleModal = () => {
-    const { showModal } = this.state
     this.setState({showModal:false})
+    this.props.navigation.navigate('AddDeck')
   }
 
   render() {
-    //  console.log('thisProps en LIST ',this.props)
     const { deckList } = this.props
-    // console.log('deckList ',deckList)
     const isEmpty = Object.keys(deckList).length <1 ? true : false
     let listToRender = <ActivityIndicator size={'large'}/>
     if (!isEmpty) {
@@ -70,11 +68,10 @@ class ListDeck extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor:MyColors.textPrimaryColor }}>
         <List>{listToRender}</List>
-        {this.state.showModal && (
+        { isEmpty && this.state.showModal && (
           <MyIModal
             modalState={this.state.showModal}
             toggleModal={this.toggleModal}
-            {...{ correctAnswers, incorrectAnswers, totalQuestions }}
           />
         )}
       </View>

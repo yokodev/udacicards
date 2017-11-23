@@ -8,7 +8,7 @@ class MyModal extends Component {
   returnToDeckList = ()=>{
     const { showModal, modalState, execDecision } = this.props
     showModal(!modalState)
-    execDecision({decision:'ListDeck'})
+    execDecision({decision:'Deck'})
   }
   resetTest = ()=>{
     const { showModal, modalState, execDecision } = this.props
@@ -51,7 +51,7 @@ class MyModal extends Component {
                 Component={TouchableOpacity}
                 borderRadius={10}
                 icon={{ name: 'assignment-turned-in' }}
-                title='Go back to DeckList'
+                title='Go back to Deck Item'
                 backgroundColor={MyColors.accentColor}
                 onPress={() => {
                     this.returnToDeckList()

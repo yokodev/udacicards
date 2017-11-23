@@ -6,10 +6,11 @@ import TextButton from './TextButton'
 import { NavigationActions } from 'react-navigation'
 import { FormInput, Button } from 'react-native-elements'
 import { saveDeckTitle, persistData } from '../storage'
-import { getAllDecks, addDeckItem } from '../actions'
+import {  addDeckItem, getDeckItem } from '../actions'
 import { connect } from 'react-redux'
 import FormValidationMessage from './FormValidationMessage'
 import ElevatedView from 'react-native-elevated-view'
+import startCase from 'lodash.startcase'
 
 class NewDeck extends React.Component {
   state = {
@@ -21,8 +22,14 @@ class NewDeck extends React.Component {
     const { title } = this.state
 
     if(title.trim().length >0){
+      const preparedTitle = startCase(title.toLowerCase()).replace(/\s+/g, '')
+      const item =  { title:preparedTitle,questions:[]}
       this.props.dispatch(addDeckItem({ title }))
-      this.props.navigation.goBack()
+      this.props.dispatch(getDeckItem({deckItem:item}))
+      this.props.navigation.navigate('Deck', { item })
+
+      // this.props.navigation.goBack()
+      // this.props.navigation.navigate('Deck')
       this.textInput.clearText()
       this.setState({showError:false, title:''})
     }else{
@@ -55,7 +62,7 @@ class NewDeck extends React.Component {
             Component={TouchableOpacity}
             borderRadius={10}
             icon={{ name: 'add-box' }}
-            title="Add Title"
+            title="Create Deck"
             backgroundColor={MyColors.accentColor}
             onPress={this.saveTitle}
             buttonStyle={[styles.btn, { marginBottom: 10 }]}
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   elevatedContainer:{
     marginTop:30,
     margin:20,
-    width:350,
+    // width:350,
     backgroundColor:MyColors.textPrimaryColor,
     borderRadius:5,
   },

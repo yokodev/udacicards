@@ -20,8 +20,11 @@ class DeckItem extends React.Component {
   startQuiz = ()=>{
     // const { item }= this.props.navigation.state.params
     const {deckItem}= this.props
-    this.props.dispatch(setTotalQuestions(deckItem.questions.length))
-    this.props.navigation.navigate('Quiz',{item:deckItem})
+    const totalQuestions = deckItem.questions.length
+    if (totalQuestions >0){
+      this.props.dispatch(setTotalQuestions(totalQuestions))
+      this.props.navigation.navigate('Quiz',{item:deckItem})
+    }
   }
 
   render(){

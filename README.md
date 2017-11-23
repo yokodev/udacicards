@@ -1,4 +1,4 @@
-# UdaciCards -- React Native project for the Udacity nanodegree 
+# UdaciCards -- React Native project for the Udacity nanodegree
 
 This is the third project from Udacity's nanodegree on React native
 
@@ -9,6 +9,8 @@ node
 
 npm @4.6.1, It has to be this version otherwise could cause issues.
 
+### Tested Platforms
+This app has only been tested in android
 
 ### Installing
 

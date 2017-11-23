@@ -23,12 +23,12 @@ export function createNotifications(){
   }
 }
 const schedulingOptions = ()=>{
-  let inFewMinutes = new Date()
-  inFewMinutes.setDate(inFewMinutes.getDate()+1)
-  inFewMinutes.setHours(inFewMinutes.getHours())
-  inFewMinutes.setMinutes(inFewMinutes.getMinutes())
+  let desiredDate = new Date()
+  desiredDate.setDate(desiredDate.getDate()+1)
+  desiredDate.setHours(desiredDate.getHours())
+  desiredDate.setMinutes(desiredDate.getMinutes())
   return {
-    time:inFewMinutes,
+    time:desiredDate,
     repeat:'day'
   }
 }

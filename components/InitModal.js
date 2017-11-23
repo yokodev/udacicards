@@ -6,8 +6,8 @@ import  * as MyColors from '../utils/colors'
 class MyIModal extends Component {
 
   startDeckList = ()=>{
-    const { toggleModal, modalState  } = this.props
-    toggleModal(!modalState)
+    const { toggleModal  } = this.props
+    toggleModal()
   }
 
   render() {

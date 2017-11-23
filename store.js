@@ -24,7 +24,7 @@ let reducer = persistCombineReducers(config, { deckList, deckItem, quiz } )
 
 export default function configureStore(){
 
-    const middleWares = [logger, thunk]
+    const middleWares = [/*logger, thunk*/]
     const enhancers = [applyMiddleware(...middleWares)]
 
     const composeEnhancers =
@@ -35,7 +35,7 @@ export default function configureStore(){
 
     let store = createStore(reducer, composeEnhancers(...enhancers) )
     let persistor = persistStore( store )
-    // persistor.purge()
+    persistor.purge()
 
     return { persistor, store}
 }
