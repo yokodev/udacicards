@@ -1,10 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet,TouchableOpacity, Dimensions } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import TextButton from './TextButton'
-import { textPrimaryColor, secondaryTextColor } from '../utils/colors'
+import { FormLabel, FormInput, Button } from 'react-native-elements'
+import * as MyColors from '../utils/colors'
 import { getDeckItem, setTotalQuestions } from '../actions'
+import ElevatedView from 'react-native-elevated-view'
+
+const SCREEN_WIDTH = Dimensions.get('window').width
+const SCREEN_HEIGHT = Dimensions.get('window').height
 
 class DeckItem extends React.Component {
 
@@ -24,41 +28,84 @@ class DeckItem extends React.Component {
     // console.log('en deckItem ', this.props);
     const { questions=[], title='Default Card' }= this.props.deckItem
     return(
-      <View>
-        <Text style={styles.mainHeader}>{title}</Text>
-        <Text style={styles.subHeader}>{`${questions? questions.length:0} Cards`}</Text>
-        <TextButton btnStyle={[styles.btn,
-          { backgroundColor:'white',
-            borderColor: 'black',
-            marginBottom: 5
-          }]} txtStyle={{color:'black'}} onPress={this.addCard}>Add Card</TextButton>
-        {/* <View style={{borderBottomWidth:10,borderBottomColor:dividerColor}}></View> */}
-        <TextButton btnStyle={styles.btn} onPress={this.startQuiz}>Start Quiz</TextButton>
+      <View style={styles.mainContainer}>
+        <ElevatedView style={styles.elevatedContainer} elevation={15} >
+        <View style={styles.txtContainer}>
+          <Text style={styles.mainHeader}>{title}</Text>
+          <Text style={styles.subHeader}>{`${questions? questions.length:0} Cards`}</Text>
+        </View>
+        <View style={styles.btnContainer}>
+          <Button
+            Component={TouchableOpacity}
+            borderRadius={10}
+            icon={{ name: 'add-box' }}
+            title="Add Card"
+            backgroundColor={MyColors.accentColor}
+            onPress={this.addCard}
+            buttonStyle={[styles.btn,
+              { marginBottom: 5, borderWidth:1, borderColor:'white',
+                backgroundColor:'transparent'}]
+            }
+          />
+          <Button
+            Component={TouchableOpacity}
+            borderRadius={10}
+            icon={{ name: 'playlist-play' }}
+            title="Start Quiz"
+            backgroundColor={MyColors.accentColor}
+            onPress={this.startQuiz}
+            buttonStyle={[styles.btn, { marginBottom: 10 }]}
+          />
+        </View>
+        </ElevatedView>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  mainContainer:{
+    flex:1,
+    backgroundColor:MyColors.textPrimaryColor
+  },
+  elevatedContainer:{
+    marginTop:70,
+    margin:10,
+    backgroundColor:MyColors.defaultPrimaryColor,
+    height:350,
+    borderRadius:5,
+    // borderWidth:0.5
+  },
+  txtContainer:{
+    marginTop:50,
+    marginBottom:30,
+    alignItems:'center',
+
+  },
   mainHeader:{
-    fontSize:30,
-    color:textPrimaryColor,
-    // flex:1,
+    fontSize:40,
+    color:MyColors.textPrimaryColor,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    textAlign:'center'
   },
   subHeader:{
-    fontSize:18,
-    color:secondaryTextColor,
-    // flex:1,
+    fontSize:20,
+    marginTop:5,
+    color:MyColors.lightPrimaryColor,
     justifyContent:'center',
     alignItems:'center',
   },
+  btnContainer: {
+    marginTop:25,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   btn:{
-    // width:200,
-    borderRadius: 25,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
+    width:200,
+    // borderRadius: 25,
+    // borderWidth: 0.5,
+
   }
 
 })

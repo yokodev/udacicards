@@ -1,29 +1,21 @@
 import React, { Component } from 'react'
 import { Modal, Text, StyleSheet, View, TouchableOpacity } from 'react-native'
-import TextButton from './TextButton'
 import { Button } from 'react-native-elements'
 import  * as MyColors from '../utils/colors'
 
-class MyModal extends Component {
-  returnToDeckList = ()=>{
-    const { showModal, modalState, execDecision } = this.props
-    showModal(!modalState)
-    execDecision({decision:'ListDeck'})
-  }
-  resetTest = ()=>{
-    const { showModal, modalState, execDecision } = this.props
-    showModal(!modalState)
-    execDecision({decision:'reset'})
+class MyIModal extends Component {
 
+  startDeckList = ()=>{
+    const { toggleModal, modalState  } = this.props
+    toggleModal(!modalState)
   }
 
   render() {
-    const { modalState, showModal, correctAnswers,
-             incorrectAnswers, totalQuestions } = this.props
+    const { modalState } = this.props
 
     return (
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent
           visible={modalState}
           onRequestClose={() => {
@@ -35,26 +27,18 @@ class MyModal extends Component {
 
           <View style={styles.resultsContainer}>
               <Text style={styles.resultText}>
-              {correctAnswers} good answer/s out of {totalQuestions}</Text>
+               You have not added any Decks to the List
+             </Text>
           </View>
             <View style={styles.btnContainer}>
               <Button
                 Component={TouchableOpacity}
                 borderRadius={10}
-                icon={{ name: 'loop' }}
-                title='ReTry Test '
-                // backgroundColor={'green'}
-                onPress={this.resetTest}
-                buttonStyle={[styles.btn, { marginBottom: 5 }]}
-              />
-              <Button
-                Component={TouchableOpacity}
-                borderRadius={10}
-                icon={{ name: 'assignment-turned-in' }}
-                title='Go back to DeckList'
+                icon={{ name: 'pan-tool' }}
+                title='Start'
                 backgroundColor={MyColors.accentColor}
                 onPress={() => {
-                    this.returnToDeckList()
+                    this.startDeckList()
                   }}
                 buttonStyle={[styles.btn, { marginBottom: 5 }]}
               />
@@ -98,4 +82,4 @@ const styles = StyleSheet.create({
      }
 })
 
-export default MyModal
+export default MyIModal

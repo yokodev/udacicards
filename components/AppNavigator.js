@@ -2,7 +2,7 @@ import React from 'react'
 import { StackNavigator , TabNavigator } from 'react-navigation'
 import { Platform } from 'react-native'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { darkPrimaryColor,defaultPrimaryColor, textPrimaryColor} from '../utils/colors'
+import * as MyColors from '../utils/colors'
 import DeckItem from './DeckItem'
 import ListDeck from './ListDeck'
 import NewDeck from './NewDeck'
@@ -29,10 +29,11 @@ const Tabs = TabNavigator({
     header:null
   },
   tabBarOptions:{
-    activeTintColor: Platform.OS === 'ios' ? "purple": textPrimaryColor,
+    activeTintColor: Platform.OS === 'ios' ? "purple": MyColors.textPrimaryColor,
+    indicatorStyle:{backgroundColor:MyColors.textPrimaryColor},
     style:{
       height:56,
-      backgroundColor:Platform.OS === 'ios' ? "white": darkPrimaryColor,
+      backgroundColor:Platform.OS === 'ios' ? "white": MyColors.defaultPrimaryColor,
       shadowColor: 'rgba(0,0,0,0.24)',
       shadowOffset: {
         width:0,

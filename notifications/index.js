@@ -24,12 +24,12 @@ export function createNotifications(){
 }
 const schedulingOptions = ()=>{
   let inFewMinutes = new Date()
-  inFewMinutes.setDate(inFewMinutes.getDate())
+  inFewMinutes.setDate(inFewMinutes.getDate()+1)
   inFewMinutes.setHours(inFewMinutes.getHours())
-  inFewMinutes.setMinutes(inFewMinutes.getMinutes()+10)
+  inFewMinutes.setMinutes(inFewMinutes.getMinutes())
   return {
     time:inFewMinutes,
-    repeat:'hour'
+    repeat:'day'
   }
 }
 export function setLocalNotifications(){
