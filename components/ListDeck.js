@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  View, Text, StyleSheet,
-  FlatList, DeviceEventEmitter, ActivityIndicator } from 'react-native'
+  View, Text, StyleSheet, FlatList,
+  DeviceEventEmitter,
+  ActivityIndicator, Animated } from 'react-native'
 import Reactotron from 'reactotron-react-native'
 import TextButton from './TextButton'
 import { List, ListItem } from 'react-native-elements'

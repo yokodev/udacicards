@@ -29,8 +29,8 @@ Does the Quiz View function correctly?:
     ✔ Buttons are included to allow the student to mark their guess as 'Correct' or 'Incorrect' @done(2017-11-22 22:53) @project(Does the Quiz View function correctly?)
     ✔ The view displays the number of questions remaining. @done(2017-11-22 22:53) @project(Does the Quiz View function correctly?)
     ✔ When the last question is answered, a score is displayed. This can be displayed as a percentage of correct answers or just the number of questions answered correctly. @done(2017-11-22 22:53) @project(Does the Quiz View function correctly?)
-    ☐ When the score is displayed, buttons are displayed to either start the quiz over or go back to the Individual Deck view.
-    ☐ Both the 'Restart Quiz' and 'Back to Deck' buttons route correctly to their respective views.
+    ✔ When the score is displayed, buttons are displayed to either start the quiz over or go back to the Individual Deck view. @done(2017-11-23 17:35) @project(Does the Quiz View function correctly?)
+    ✔ Both the 'Restart Quiz' and 'Back to Deck' buttons route correctly to their respective views. @done(2017-11-23 17:35) @project(Does the Quiz View function correctly?)
 Does the New Deck view work correctly?:
     ✔ The view includes a form for creating a new deck - which should just be an input for the title and a 'Create Deck' button. @done(2017-11-22 20:29) @project(Does the New Deck view work correctly?)
     ✔ Pressing the button correctly creates the deck and routes the user to the Individual Deck view for the new deck. @done(2017-11-22 22:46) @project(Does the New Deck view work correctly?)

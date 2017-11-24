@@ -14,7 +14,7 @@ const config = {
   // key: 'MyUdaciCards:storage_key',
   key: 'Mytorage_key',
   storage:AsyncStorage,
-  debug:true,
+  // debug:true,
   blacklist:['quiz']
 }
 
@@ -35,7 +35,7 @@ export default function configureStore(){
 
     let store = createStore(reducer, composeEnhancers(...enhancers) )
     let persistor = persistStore( store )
-    persistor.purge()
+    // persistor.purge()
 
     return { persistor, store}
 }

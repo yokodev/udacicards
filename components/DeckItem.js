@@ -12,6 +12,12 @@ const SCREEN_HEIGHT = Dimensions.get('window').height
 
 class DeckItem extends React.Component {
 
+
+
+  gotoDeckList = ()=>{
+    this.props.navigation.navigate('ListDeck')
+  }
+
   addCard = ()=>{
     const { item }= this.props.navigation.state.params
     this.props.navigation.navigate('NewCard',{item})
@@ -32,6 +38,17 @@ class DeckItem extends React.Component {
     const { questions=[], title='Default Card' }= this.props.deckItem
     return(
       <View style={styles.mainContainer}>
+        <View style={styles.goHome}>
+          <Button
+            Component={TouchableOpacity}
+            borderRadius={10}
+            icon={{ name: 'home' }}
+            title="Deck List"
+            backgroundColor={MyColors.accentColor}
+            onPress={this.gotoDeckList}
+            // buttonStyle={styles.btn,}
+          />
+        </View>
         <ElevatedView style={styles.elevatedContainer} elevation={15} >
         <View style={styles.txtContainer}>
           <Text style={styles.mainHeader}>{title}</Text>
@@ -67,12 +84,18 @@ class DeckItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  goHome:{
+    marginTop:5,
+    flexDirection: 'row',
+    justifyContent:'flex-end',
+    // backgroundColor:MyColors.blue
+  },
   mainContainer:{
     flex:1,
     backgroundColor:MyColors.textPrimaryColor
   },
   elevatedContainer:{
-    marginTop:70,
+    marginTop:65,
     margin:10,
     backgroundColor:MyColors.defaultPrimaryColor,
     height:350,

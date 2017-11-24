@@ -25,6 +25,7 @@ const Tabs = TabNavigator({
     }
   }
 },{
+  // animationEnabled: true,
   navigationOptions:{
     header:null
   },
@@ -43,6 +44,8 @@ const Tabs = TabNavigator({
       shadowOpacity:1
     }
   }
+  ,tabBarPosition:'bottom'
+  ,swipeEnabled:false
   })
 
 const Stack = StackNavigator({
@@ -52,7 +55,7 @@ const Stack = StackNavigator({
   Deck:{
     screen: DeckItem,
     navigationOptions:{
-      title:'Ucacicards',
+      title:'Udacicards',
     }
   },
   NewCard:{
@@ -69,6 +72,9 @@ const Stack = StackNavigator({
     }
 
   }
+},{
+  headerMode:'screen',
+  // mode:'modal'
 })
 
 export default Stack

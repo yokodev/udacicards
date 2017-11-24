@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
-import { Modal, Text, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Modal, Text, StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
-import  * as MyColors from '../utils/colors'
+import * as MyColors from '../utils/colors'
+import Intro from './Intro'
+import Slide from './Slide'
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const GREETING_DATA=[
+  { textHeader: 'Welcome to Udacicards',text:'This tool will help you memorize anything!!!',color:MyColors.ccolor01},
+  { text: 'To get yourself started just add a new Deck, and as many cards as you need',color:MyColors.defaultPrimaryColor},
+]
+
 
 class MyIModal extends Component {
-
-  startDeckList = ()=>{
-    const { toggleModal  } = this.props
+  startDeckList = () => {
+    const { toggleModal } = this.props
     toggleModal()
   }
 
@@ -14,72 +22,28 @@ class MyIModal extends Component {
     const { modalState } = this.props
 
     return (
-        <Modal
-          animationType="fade"
-          transparent
-          visible={modalState}
-          onRequestClose={() => {
-            alert('Modal has been closed.')
-          }}
-        >
-          <View style={styles.modal}>
-            <View style={ styles.container }>
-
-          <View style={styles.resultsContainer}>
-              <Text style={styles.resultText}>
-               You have not added any Decks to the List
-             </Text>
-          </View>
-            <View style={styles.btnContainer}>
-              <Button
-                Component={TouchableOpacity}
-                borderRadius={10}
-                icon={{ name: 'pan-tool' }}
-                title='Start'
-                backgroundColor={MyColors.accentColor}
-                onPress={() => {
-                    this.startDeckList()
-                  }}
-                buttonStyle={[styles.btn, { marginBottom: 5 }]}
-              />
-            </View>
-            </View>
-          </View>
-        </Modal>
+      <Modal
+        animationType="fade"
+        transparent
+        visible={modalState}
+        onRequestClose={() => {
+          console.log('Modal has been closed.')
+        }}
+      >
+        <View style={styles.modal}>
+          <Slide data={GREETING_DATA} startDeckList={this.startDeckList} />
+        </View>
+      </Modal>
     )
   }
 }
 
 const styles = StyleSheet.create({
-    modal:{
-      flex:1,
-      backgroundColor:'rgba(0,0,0,0.7)',
-      marginTop: 22,
-    },
-    container:{
-        // flex:1,
-        // flexDirection:'row',
-        backgroundColor:'white',
-        justifyContent:'center',
-        alignItems:'center',
-        margin:15,
-        borderRadius: 25,
-        borderWidth: 0.5,
-     },
-     btnContainer:{
-      //  height:200,
-       flexDirection:'row',
-       marginBottom:10
+  modal: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  }
 
-     },
-     resultsContainer:{
-       height:100,
-       marginTop:40
-     }
-     ,resultText:{
-       fontSize:30,
-       fontWeight:'bold',
-     }
 })
 
 export default MyIModal

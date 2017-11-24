@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import QA from './QA'
 import Modal from './Modal'
 import { Button } from 'react-native-elements'
-import * as Mcolors from '../utils/colors'
 import { toggleFlipText, addCorrect, addIncorrect, toggleModal, resetQuiz, getDeckItem } from '../actions'
 import { clearLocalNotifications, setLocalNotifications } from '../notifications'
 import ElevatedView from 'react-native-elevated-view'
@@ -62,6 +61,7 @@ class Quiz extends React.Component {
     const item = deckItem
     dispatch(getDeckItem({deckItem:item}))
     decision === 'Deck' && navigate(decision,{item})
+    decision === 'ListDeck' && navigate(decision)
     clearLocalNotifications().then(setLocalNotifications())
   }
 
