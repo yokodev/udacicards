@@ -1,5 +1,5 @@
 //import { Notifications, Permissions }  from 'expo'
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from '@react-native-community/async-storage';
 const NOTIFICATION_KEY = 'UdaciCards:notifications';
 
 export function clearLocalNotifications() {

@@ -7,7 +7,7 @@ import { deckList, deckItem, quiz } from './src/reducers';
 import { REHYDRATE, PURGE, persistStore, persistCombineReducers } from 'redux-persist';
 //import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 // import storage from 'redux-persist/lib/storage'
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from '@react-native-community/async-storage';
 
 const config = {
   // key: 'MyUdaciCards:storage_key',

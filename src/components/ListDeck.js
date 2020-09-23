@@ -1,10 +1,14 @@
 import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
-//import Reactotron from 'reactotron-react-native'
+// ESTE NO//import Reactotron from 'reactotron-react-native'
 import { List, ListItem } from 'react-native-elements';
 import * as MyColors from '../utils/colors';
-import { connect } from 'react-redux';
-import { getDeckItem } from '../actions';
+{
+  /*import { connect } from 'react-redux';*/
+}
+{
+  /*import { getDeckItem } from '../actions';*/
+}
 import MyIModal from './InitModal';
 
 class ListDeck extends React.Component {
@@ -77,4 +81,7 @@ function mapStateToProps({ deckList }) {
     deckList,
   };
 }
-export default connect(mapStateToProps)(ListDeck);
+
+{
+  /*export default connect(mapStateToProps)(ListDeck);*/
+}
