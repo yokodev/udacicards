@@ -16,7 +16,8 @@ const config = {
   blacklist: ['quiz'],
 };
 
-let reducer = persistCombineReducers(config, { deckList, deckItem, quiz });
+//let reducer = persistCombineReducers(config, { deckList, deckItem, quiz });
+let reducer = persistCombineReducers(config, { deckList });
 /****REDUX-PERSIST****/
 
 export default function configureStore() {
@@ -31,6 +32,7 @@ export default function configureStore() {
       : compose;
 
   let store = createStore(reducer, composeEnhancers(...enhancers));
+  //let store = createStore(reducer);
   let persistor = persistStore(store);
   // persistor.purge()
 

@@ -51,7 +51,7 @@ export function Decks() {
 export function Tabs() {
   return (
     <Tab.Navigator {...tabOptions}>
-      <Tab.Screen name="ListDeck" component={Settings} options={listDeckTabOptions} />
+      <Tab.Screen name="ListDeck" component={ListDeck} options={listDeckTabOptions} />
       <Tab.Screen name="AddDeck" component={ProfileScreen} options={newDeckTabOptions} />
     </Tab.Navigator>
   );

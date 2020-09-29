@@ -1,4 +1,4 @@
-import Reactotron from 'reactotron-react-native';
+//import Reactotron from 'reactotron-react-native';
 import { AsyncStorage } from '@react-native-community/async-storage';
 import startCase from 'lodash.startcase';
 
@@ -128,7 +128,7 @@ export function removeThis(tokenId) {
 export function clearStore() {
   return AsyncStorage.clear();
 }
-
+//arreglar luego al poner denuevo reactotron
 export function persistData() {
   return AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(decksEXAMPLE), (error) =>
     Reactotron.error(error),
