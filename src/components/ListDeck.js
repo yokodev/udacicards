@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 
-// ESTE NO//import Reactotron from 'reactotron-react-native'
+//import {  } from '@react-native-community/async-storage'\
 
+import { persistData } from '../storage/index';
 import { List, ListItem, Badge } from 'react-native-elements';
 import * as MyColors from '../utils/colors';
 
@@ -34,9 +35,9 @@ class ListDeck extends React.Component {
     showModal: true,
   };
 
-  //setInitialData = () => {
-  //persistData().then((data) => console.log(data));
-  //};
+  setInitialData = () => {
+    persistData().then((data) => console.log(`The Data: ${data}`));
+  };
 
   goToDeckItem = ({ item }) => {
     //this.props.dispatch(getDeckItem({ deckItem: item }));
@@ -50,19 +51,20 @@ class ListDeck extends React.Component {
   };
 
   render() {
+    //this.setInitialData();
+    showAsyncStorageContentInDev();
     const { deckList } = this.props;
     console.log(`Hey que ondas ${JSON.stringify(deckList)}`);
     const isEmpty = Object.keys(deckList).length < 1 ? true : false;
-
     console.log(`isEmpty : ${isEmpty}`);
     let listToRender = <ActivityIndicator size={'large'} color={MyColors.accentColor} />;
-    //if (!isEmpty) {
-    //const list = Object.values(deckList);
-    //console.log('LISTA ', list);
-    //listToRender = (
-    //<FlatList data={list} renderItem={renderItem} keyExtractor={(item) => item.title} />
-    //);
-    //}
+    if (!isEmpty) {
+      const list = Object.values(deckList);
+      console.log('LISTA ', list);
+      listToRender = (
+        <FlatList data={list} renderItem={renderItem} keyExtractor={(item) => item.title} />
+      );
+    }
     return (
       <View style={{ flex: 1, backgroundColor: MyColors.textPrimaryColor }}>
         {listToRender}

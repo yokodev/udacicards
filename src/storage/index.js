@@ -1,5 +1,5 @@
 //import Reactotron from 'reactotron-react-native';
-import { AsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import startCase from 'lodash.startcase';
 
 export const STORAGE_CARDS_KEY = 'MyUdaciCards:storage_key';
@@ -129,13 +129,12 @@ export function clearStore() {
   return AsyncStorage.clear();
 }
 //arreglar luego al poner denuevo reactotron
-export function persistData() {
-  return AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(decksEXAMPLE), (error) =>
-    Reactotron.error(error),
-  ).then(
-    (data) => data,
-    (error) => error,
-  );
+export async function persistData() {
+  try {
+    return await AsyncStorage.setItem(STORAGE_CARDS_KEY, JSON.stringify(decksEXAMPLE));
+  } catch (e) {
+    console.error(`There was an error: ${e}`);
+  }
 }
 
 export function removeEntry(key) {

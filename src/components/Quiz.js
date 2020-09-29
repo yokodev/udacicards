@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ deckItem, quiz }) => ({ deckItem, quiz });
+//const mapStateToProps = ({ deckItem, quiz }) => ({ deckItem, quiz });
 
-export default connect(mapStateToProps)(Quiz);
+//export default connect(mapStateToProps)(Quiz);
+export default Quiz;

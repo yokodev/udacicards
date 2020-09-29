@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { TextInput } from 'react-native-gesture-handler';
+//import { TextInput } from 'react-native-gesture-handler';
 
 
 

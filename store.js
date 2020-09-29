@@ -4,13 +4,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { deckList, deckItem, quiz } from './src/reducers';
 
 /****REDUX-PERSIST****/
-import { REHYDRATE, PURGE, persistStore, persistCombineReducers } from 'redux-persist';
+import {
+  REHYDRATE,
+  PURGE,
+  persistStore,
+  persistCombineReducers,
+  persistReducer,
+} from 'redux-persist';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
 const config = {
-  // key: 'MyUdaciCards:storage_key',
-  key: 'Mytorage_key',
+  key: 'MyUdaciCards:storage_key',
+  //key: 'Mytorage_key',
   storage: AsyncStorage,
   // debug:true,
   blacklist: ['quiz'],
@@ -18,6 +24,7 @@ const config = {
 
 //let reducer = persistCombineReducers(config, { deckList, deckItem, quiz });
 let reducer = persistCombineReducers(config, { deckList });
+//let reducer = persistReducer(config, { deckList });
 /****REDUX-PERSIST****/
 
 export default function configureStore() {
