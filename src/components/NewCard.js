@@ -107,4 +107,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect()(NewCard);
+//export default connect()(NewCard);
+export default NewCard;

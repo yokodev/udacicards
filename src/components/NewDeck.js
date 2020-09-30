@@ -116,4 +116,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect()(NewDeck);
+//export default connect()(NewDeck);
+export default NewDeck;

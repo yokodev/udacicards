@@ -52,7 +52,7 @@ class ListDeck extends React.Component {
 
   render() {
     //this.setInitialData();
-    showAsyncStorageContentInDev();
+    //showAsyncStorageContentInDev()
     const { deckList } = this.props;
     console.log(`Hey que ondas ${JSON.stringify(deckList)}`);
     const isEmpty = Object.keys(deckList).length < 1 ? true : false;
