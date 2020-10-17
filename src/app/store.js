@@ -1,12 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 //import { createStore, applyMiddleware, compose } from 'redux';
 
-import { deckList, deckItem, quiz } from '../reducers/';
-import decksReducer from '../features/decklist/deklistSlice';
+//import { deckList, deckItem, quiz } from '../reducers/';
+import decksReducer from '../features/decks/decklistSlice';
 
 export default function getStore() {
   let reducer = {
-    deckList: deckList,
+    //deckList: deckList,
     decks: decksReducer,
   };
 
@@ -15,5 +15,5 @@ export default function getStore() {
     devTools: process.env.NODE_ENV !== 'production',
   });
 
-  return { store };
+  return {store};
 }
