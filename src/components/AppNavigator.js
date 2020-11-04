@@ -16,6 +16,8 @@ import NewCard from './NewCard';
 */
 import AddDeck from '../features/decks/AddDeck.jsx'
 import DeckList from '../features/decks/DeckList.jsx';
+import DeckItem from '../features/decks/DeckItem.jsx';
+import NewCard from '../features/decks/NewCard.jsx';
 
 function ProfileScreen({navigation}) {
   return (
@@ -38,8 +40,8 @@ export function Decks() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Main" component={Tabs} />
-      {/*<Stack.Screen name="Deck" component={DeckItem} />*/}
-      {/*<Stack.Screen name="NewCard" component={NewCard} />*/}
+      <Stack.Screen name="DeckItem" component={DeckItem} />
+      <Stack.Screen name="NewCard" component={NewCard} />
       {/*<Stack.Screen name="Quiz" component={Quiz} />*/}
     </Stack.Navigator>
   );
@@ -50,17 +52,18 @@ export function Tabs() {
     <Tab.Navigator {...tabOptions}>
       <Tab.Screen name="ListDeck" component={DeckList} options={listDeckTabOptions} />
       <Tab.Screen name="AddDeck" component={AddDeck} options={newDeckTabOptions} />
+      {/*<Tab.Screen name="DeckItem" component={DeckItem} options={newDeckTabOptions} />*/}
     </Tab.Navigator>
   );
 }
 
 const listDeckTabOptions = {
-  tabBarLabel: 'List Deck',
+  tabBarLabel: 'ListDeck',
   tabBarIcon: ({tintColor}) => <Ionicons name="ios-bookmarks" size={30} color={tintColor} />,
 };
 
 const newDeckTabOptions = {
-  tabBarLabel: 'New Deck',
+  //tabBarLabel: 'New Deck',
   tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={30} color={tintColor} />,
 };
 

@@ -10,20 +10,27 @@ import * as MyColors from '../../utils/colors';
 import MyIModal  from '../../components/InitModal.js'
 
 import { useSelector } from 'react-redux'
+//import { useNavigation } from '@react-navigation/native';
 
 
-const renderItem = ({ item }) => {
+const renderItem = ({item}, navigation) => {
   const questions = item.questions ? item.questions.length : 0;
+
+  const goToDeckItem = ({item}) => {
+    //this.props.dispatch(getDeckItem({ deckItem: item }));
+    console.log(`goToDeckItem:  ${JSON.stringify(item)}`);
+    navigation.navigate('DeckItem', {item});
+  };
   return (
     <ListItem
-      containerStyle={{ borderBottomColor: MyColors.dividerColor }}
-      onPress={() => this.goToDeckItem({ item })}>
+      containerStyle={{borderBottomColor: MyColors.dividerColor}}
+      onPress={() => goToDeckItem({item})}>
       <ListItem.Content>
-        <ListItem.Title style={{ color: MyColors.primaryTextColor }}>{item.title}</ListItem.Title>
+        <ListItem.Title style={{color: MyColors.primaryTextColor}}>{item.title}</ListItem.Title>
         <Badge
           value={questions}
-          textStyle={{ color: MyColors.textPrimaryColor }}
-          containerStyle={{ backgroundColor: MyColors.accentColor }}
+          textStyle={{color: MyColors.textPrimaryColor}}
+          containerStyle={{backgroundColor: MyColors.accentColor}}
         />
       </ListItem.Content>
       <ListItem.Chevron color={MyColors.secondaryTextColor} />
@@ -31,18 +38,12 @@ const renderItem = ({ item }) => {
   );
 };
 
-const ListDeck = ({navigation})=> {
-  const [showModal, setShowModal ] = useState(true)
-
+const ListDeck = ({navigation}) => {
+  const [showModal, setShowModal] = useState(true)
   //setInitialData = () => {
-    //persistData().then((data) => console.log(`The Data: ${data}`));
+  //persistData().then((data) => console.log(`The Data: ${data}`));
   //};
 
-  //goToDeckItem = ({ item }) => {
-    ////this.props.dispatch(getDeckItem({ deckItem: item }));
-    ////this.props.navigation.navigate('Deck', { item });
-    //console.log(item);
-  //};
 
   const toggleModal = () => {
     //this.setState({showModal: false});
@@ -50,26 +51,27 @@ const ListDeck = ({navigation})=> {
     //this.props.navigation.navigate('AddDeck');
     //navigation.navigate('AddDeck')
   };
-    const decks = useSelector(state=>state.decks)
-    //console.log(`Hey que ondas ${JSON.stringify(decks)}`);
-    const isEmpty = Object.keys(decks).length < 1 ? true : false;
-    //console.log(`isEmpty : ${isEmpty}`);
-    let listToRender = <ActivityIndicator size={'large'} color={MyColors.accentColor} />;
-    if (!isEmpty) {
-      const list = Object.values(decks);
-      //console.log('LISTA ', list);
-      listToRender = (
-        <FlatList data={list} renderItem={renderItem} keyExtractor={(item) => item.title} />
-      );
-    }
-    return (
-      <View style={{ flex: 1, backgroundColor: MyColors.textPrimaryColor }}>
-        {listToRender}
-        { isEmpty && showModal && 
-          (<MyIModal modalState={showModal} toggleModal={toggleModal} /> )}
-      </View>
+  const decks = useSelector(state => state.decks)
+  const isEmpty = Object.keys(decks).length < 1 ? true : false;
+  let listToRender = <ActivityIndicator size={'large'} color={MyColors.accentColor} />;
+  if (!isEmpty) {
+    const list = Object.values(decks);
+    listToRender = (
+      <FlatList data={list} 
+        keyExtractor={(item) => item.title} 
+        //renderItem={(item)=>{renderItem(item,goToDeckItem)}} 
+        renderItem={(props)=>renderItem(props,navigation)} 
+      />
     );
-  
+  }
+  return (
+    <View style={{flex: 1, backgroundColor: MyColors.textPrimaryColor}}>
+      {listToRender}
+      { isEmpty && showModal &&
+        (<MyIModal modalState={showModal} toggleModal={toggleModal} />)}
+    </View>
+  );
+
 }
 
 export default ListDeck;

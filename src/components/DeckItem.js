@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 //import {FontAwesome, Ionicons} from 'react-native-elements';
-import { connect } from 'react-redux';
-import { Button } from 'react-native-elements';
+//import { connect } from 'react-redux';
+import {Button} from 'react-native-elements';
 import * as MyColors from '../utils/colors';
-import { /*getDeckItem*/ setTotalQuestions } from '../actions';
+import { /*getDeckItem*/ setTotalQuestions} from '../actions';
 import ElevatedView from 'react-native-elevated-view';
 
 //const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -16,34 +16,34 @@ class DeckItem extends React.Component {
   };
 
   addCard = () => {
-    const { item } = this.props.navigation.state.params;
-    this.props.navigation.navigate('NewCard', { item });
+    const {item} = this.props.navigation.state.params;
+    this.props.navigation.navigate('NewCard', {item});
   };
 
   startQuiz = () => {
     // const { item }= this.props.navigation.state.params
-    const { deckItem } = this.props;
+    const {deckItem} = this.props;
     const totalQuestions = deckItem.questions.length;
     if (totalQuestions > 0) {
       this.props.dispatch(setTotalQuestions(totalQuestions));
-      this.props.navigation.navigate('Quiz', { item: deckItem });
+      this.props.navigation.navigate('Quiz', {item: deckItem});
     }
   };
 
   render() {
     // console.log('en deckItem ', this.props);
-    const { questions = [], title = 'Default Card' } = this.props.deckItem;
+    const {questions = [], title = 'Default Card'} = this.props.deckItem;
     return (
       <View style={styles.mainContainer}>
         <View style={styles.goHome}>
           <Button
             Component={TouchableOpacity}
             borderRadius={10}
-            icon={{ name: 'home' }}
+            icon={{name: 'home'}}
             title="Deck List"
             backgroundColor={MyColors.accentColor}
             onPress={this.gotoDeckList}
-            // buttonStyle={styles.btn,}
+          // buttonStyle={styles.btn,}
           />
         </View>
         <ElevatedView style={styles.elevatedContainer} elevation={15}>
@@ -55,7 +55,7 @@ class DeckItem extends React.Component {
             <Button
               Component={TouchableOpacity}
               borderRadius={10}
-              icon={{ name: 'add-box' }}
+              icon={{name: 'add-box'}}
               title="Add Card"
               backgroundColor={MyColors.accentColor}
               onPress={this.addCard}
@@ -72,11 +72,11 @@ class DeckItem extends React.Component {
             <Button
               Component={TouchableOpacity}
               borderRadius={10}
-              icon={{ name: 'playlist-play' }}
+              icon={{name: 'playlist-play'}}
               title="Start Quiz"
               backgroundColor={MyColors.accentColor}
               onPress={this.startQuiz}
-              buttonStyle={[styles.btn, { marginBottom: 10 }]}
+              buttonStyle={[styles.btn, {marginBottom: 10}]}
             />
           </View>
         </ElevatedView>
