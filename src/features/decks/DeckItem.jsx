@@ -1,21 +1,26 @@
 /* eslint-disable no-use-before-define */
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Button } from 'react-native-elements'
 import ElevatedView from 'react-native-elevated-view'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as MyColors from '../../utils/colors'
 //  import { /* getDeckItem */ setTotalQuestions } from '../../actions'
 
+
 const DeckItem = ({ route, navigation }) => {
+
+  const { title= 'Default Card' } = route.params
+  const item = useSelector((state) => state.decks[title])
+  console.log(`DATOS en DItem: ${JSON.stringify(item)}`)
   const dispatch = useDispatch()
 
   const gotoDeckList = () => {
     navigation.navigate('ListDeck')
   }
 
+
   const addCard = () => {
-    const { item } = route.params
     navigation.navigate('NewCard', { item })
   }
 
@@ -30,9 +35,7 @@ const DeckItem = ({ route, navigation }) => {
   //  }
 
   // console.log('en deckItem ', this.props);
-  // const {questions = [], title = 'Default Card'} = this.props.deckItem;
-  const questions = []
-  const title = 'Default Card'
+  const { questions = [] } = item
   return (
     <View style={styles.mainContainer}>
       <View style={styles.goHome}>
@@ -54,9 +57,12 @@ const DeckItem = ({ route, navigation }) => {
           <Button
             Component={TouchableOpacity}
             borderRadius={10}
-            icon={{ name: 'add-box' }}
+            icon={{
+              name: 'add-box',
+              size: 20,
+              color: MyColors.accentColor,
+            }}
             title="Add Card"
-            backgroundColor={MyColors.accentColor}
             onPress={addCard}
             buttonStyle={[
               styles.btn,
@@ -71,9 +77,12 @@ const DeckItem = ({ route, navigation }) => {
           <Button
             Component={TouchableOpacity}
             borderRadius={10}
-            icon={{ name: 'playlist-play' }}
+            icon={{
+              name: 'playlist-play',
+              size: 20,
+              color: MyColors.primaryColor,
+            }}
             title="Start Quiz"
-            backgroundColor={MyColors.accentColor}
             onPress={() => console.log(`Starting dos startQuiz`)}
             buttonStyle={[styles.btn, { marginBottom: 10 }]}
           />
@@ -97,7 +106,8 @@ const styles = StyleSheet.create({
   elevatedContainer: {
     marginTop: 65,
     margin: 10,
-    backgroundColor: MyColors.defaultPrimaryColor,
+    //  backgroundColor: MyColors.defaultPrimaryColor,
+    backgroundColor: MyColors.primaryColor,
     height: 350,
     borderRadius: 5,
     // borderWidth:0.5
@@ -128,8 +138,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     width: 200,
-    // borderRadius: 25,
-    // borderWidth: 0.5,
+    backgroundColor: MyColors.accentColor,
   },
 })
 

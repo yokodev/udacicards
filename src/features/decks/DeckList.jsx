@@ -16,26 +16,27 @@ import { useSelector } from 'react-redux'
 const renderItem = ({item}, navigation) => {
   const questions = item.questions ? item.questions.length : 0;
 
-  const goToDeckItem = ({item}) => {
+  const goToDeckItem = ({item: {title}}) => {
     //this.props.dispatch(getDeckItem({ deckItem: item }));
-    console.log(`goToDeckItem:  ${JSON.stringify(item)}`);
-    navigation.navigate('DeckItem', {item});
+    //  console.log(`goToDeckItem:  ${JSON.stringify(item)}`);
+    navigation.navigate('DeckItem', {title});
   };
   return (
     <ListItem
-      containerStyle={{borderBottomColor: MyColors.dividerColor}}
-      onPress={() => goToDeckItem({item})}>
+      containerStyle={{ borderBottomColor: MyColors.dividerColor }}
+      onPress={() => goToDeckItem({ item })}>
       <ListItem.Content>
-        <ListItem.Title style={{color: MyColors.primaryTextColor}}>{item.title}</ListItem.Title>
+        {/*  <ListItem.Title style={{color: MyColors.primaryTextColor}}>{item.title}</ListItem.Title>  */}
+        <ListItem.Title>{item.title}</ListItem.Title>
         <Badge
           value={questions}
-          textStyle={{color: MyColors.textPrimaryColor}}
-          containerStyle={{backgroundColor: MyColors.accentColor}}
+          textStyle={{ color: MyColors.textPrimaryColor }}
+          containerStyle={{ backgroundColor: MyColors.accentColor }}
         />
       </ListItem.Content>
       <ListItem.Chevron color={MyColors.secondaryTextColor} />
     </ListItem>
-  );
+  )
 };
 
 const ListDeck = ({navigation}) => {

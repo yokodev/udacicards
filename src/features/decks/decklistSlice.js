@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   React: {
@@ -24,18 +24,22 @@ const initialState = {
       },
     ],
   },
-};
+}
 
 const deckslistSlice = createSlice({
   name: 'decks',
   initialState,
   reducers: {
     deckAdded(state, action) {
-      const {title} = action.payload
-      return {...state, [title]: {'title': title, 'questions': []}}
-    }
+      const { title } = action.payload
+      return { ...state, [title]: { title, questions: [] } }
+    },
+    questionAdded(state, action) {
+      const { question, title } = action.payload
+      state[title].questions.push(question)
+    },
   },
-});
+})
 
-export const {deckAdded} = deckslistSlice.actions
-export default deckslistSlice.reducer;
+export const { deckAdded, questionAdded } = deckslistSlice.actions
+export default deckslistSlice.reducer

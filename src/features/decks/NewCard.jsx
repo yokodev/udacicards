@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { Button } from 'react-native-elements'
-//  import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from 'react-native-animatable'
+import styled, { css } from '@emotion/native'
 //  import { addNewCard } from '../../actions';
 //  import FormValidationMessage from '../../components/FormValidationMessage';
-
+import { questionAdded } from './decklistSlice'
 import * as MyColors from '../../utils/colors'
 
 const styles = StyleSheet.create({
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     elevation: 10,
+    // eslint-disable-next-line no-dupe-keys
     backgroundColor: '#e6e6e6',
   },
   btnContainer: {
@@ -45,10 +47,33 @@ const styles = StyleSheet.create({
     //  borderBottomRightRadius: 10,
   },
   btn: {
-    //  width: 200,
+    backgroundColor: MyColors.accentColor,
   },
 })
 
+const ScreenContainer = styled.View`
+  display: flex;
+  align-items: center;
+  //  justify-content: center;
+  //  margin-top: 30;
+  padding-top: 20px;
+  background-color: white;
+  height: 100%;
+`
+
+const FormContainer = styled.View`
+  width: 90%;
+  align-items: center;
+  border-radius: 10px;
+  background-color: ${MyColors.richBlackFogra29};
+  padding: 15px;
+  //  shadow-color: #0000;
+  shadow-color: ${MyColors.dividerColor};
+  //  shadow-offset:
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84;
+  elevation: 12;
+`
 const validationSchema = yup.object().shape({
   question: yup
     .string()
@@ -83,23 +108,32 @@ const SuperInput = ({ value, onChangeText, onBlur, placeholder, ...rest }) => {
   )
 }
 
-const NewCard = (/* { navigation } */) => {
+const NewCard = ({route, navigation }) => {
+  const { item: { title }} = route.params
+  const dispatch = useDispatch()
+  console.log(`titulo: ${JSON.stringify(title)}`)
+  //  console.log(`datatitle: ${JSON.stringify(item.title)}`)
+
+  const addNewQuestion = (values) => {
+    console.log(`values : ${JSON.stringify(values)}`)
+    console.log(`title : ${JSON.stringify(title)}`)
+    dispatch(questionAdded({ question: values, title }))
+  }
   return (
-    <View style={styles.screenContainer}>
+    <ScreenContainer>
       <Formik
         initialValues={{ question: '', answer: '' }}
         validationSchema={validationSchema}
-        onSubmit={(values,actions) => {
-          alert(JSON.stringify(values, null, 2))
+        onSubmit={(values, actions) => {
+          addNewQuestion(values, title)
+          //alert(JSON.stringify(values, null, 2))
           actions.setSubmitting(false)
           actions.resetForm()
+          navigation.goBack()
         }}
-        //  onReset={(values) => {
-        //    alert(JSON.stringify(values, null, 2))
-        //  }}
       >
         {({ handleChange, handleSubmit, values, errors, ...rest }) => (
-          <View style={styles.formContainer}>
+          <FormContainer>
             {/*  <Text style={{ color: 'red' }}>{JSON.stringify(rest, null, 2)}</Text>  */}
             <SuperInput
               onChangeText={handleChange('question')}
@@ -113,7 +147,8 @@ const NewCard = (/* { navigation } */) => {
               placeholder="Answer"
               error={errors.answer}
             />
-            <View style={styles.btnContainer}>
+            {/*  <View style={styles.btnContainer}>  */}
+            <View>
               <Button
                 icon={{
                   name: 'add-box',
@@ -138,10 +173,10 @@ const NewCard = (/* { navigation } */) => {
                 buttonStyle={styles.btn}
               />
             </View>
-          </View>
+          </FormContainer>
         )}
       </Formik>
-    </View>
+    </ScreenContainer>
   )
 }
 
