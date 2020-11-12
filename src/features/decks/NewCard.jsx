@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import React from 'react'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import { Formik } from 'formik'
@@ -13,12 +13,12 @@ import * as MyColors from '../../utils/colors'
 
 const styles = StyleSheet.create({
   siTxtIput: {
-    fontSize: 18,
+    fontSize: 20,
     borderColor: MyColors.dividerColor,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: 'white',
-    color: MyColors.primaryTextColor,
+    color: MyColors.primaryDarkColor,
     width: '100%',
     //  height: 40,
     margin: 10,
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: MyColors.accentColor,
+    width: 200,
   },
 })
 
@@ -99,7 +100,7 @@ const SuperInput = ({ value, onChangeText, onBlur, placeholder, ...rest }) => {
         {...rest}
       />
       {rest.error && (
-        <Animatable.Text style={{ color: 'red', fontSize: 13 }} animation="shake">
+        <Animatable.Text style={{ color: 'red', fontSize: 15 }} animation="bounceInLeft">
           {rest.error}
         </Animatable.Text>
       )}
@@ -161,7 +162,7 @@ const NewCard = ({route, navigation }) => {
                 raised
                 buttonStyle={styles.btn}
               />
-              <Button
+              {/* <Button
                 icon={{
                   name: 'redo',
                   size: 20,
@@ -171,7 +172,7 @@ const NewCard = ({route, navigation }) => {
                 onPress={rest.handleReset}
                 raised
                 buttonStyle={styles.btn}
-              />
+                />  */}
             </View>
           </FormContainer>
         )}

@@ -1,26 +1,25 @@
-import React, {useState} from 'react';
-import { View, ActivityIndicator, FlatList } from 'react-native';
+import React, { useState } from 'react'
+import { View, ActivityIndicator, FlatList } from 'react-native'
 
-//import {  } from '@react-native-community/async-storage'\
-//import { persistData } from '../../storage/index';
-import { ListItem, Badge } from 'react-native-elements';
-import * as MyColors from '../../utils/colors';
+//  import {  } from '@react-native-community/async-storage'\
+//  import { persistData } from '../../storage/index';
 
-//import { getDeckItem } from '../actions';
-import MyIModal  from '../../components/InitModal.js'
+import { ListItem, Badge } from 'react-native-elements'
 
 import { useSelector } from 'react-redux'
-//import { useNavigation } from '@react-navigation/native';
+import MyIModal from '../../components/InitModal'
 
+
+import * as MyColors from '../../utils/colors';
 
 const renderItem = ({item}, navigation) => {
   const questions = item.questions ? item.questions.length : 0;
 
-  const goToDeckItem = ({item: {title}}) => {
-    //this.props.dispatch(getDeckItem({ deckItem: item }));
+  const goToDeckItem = ({ item: { title } }) => {
+    //  this.props.dispatch(getDeckItem({ deckItem: item }));
     //  console.log(`goToDeckItem:  ${JSON.stringify(item)}`);
-    navigation.navigate('DeckItem', {title});
-  };
+    navigation.navigate('DeckItem', { title })
+  }
   return (
     <ListItem
       containerStyle={{ borderBottomColor: MyColors.dividerColor }}
