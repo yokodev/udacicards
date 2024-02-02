@@ -27,7 +27,7 @@
     "react-native": "^0.49.5",
     "react-native-elements": "^0.18.2",
     "react-native-elevated-view": "^0.0.5",
-    "react-navigation": "^1.0.0-beta.15",
+    "react-navigation": "^5.0.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-persist": "^5.3.5",
